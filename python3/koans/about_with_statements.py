@@ -14,21 +14,18 @@ class AboutWithStatements(Koan):
         try:
             file = open(file_name)
             try:
-                count = 0
-                for line in file.readlines():
-                    count += 1
-                return count
+                return len(file.readlines())
             finally:
                 file.close()
         except IOError:
             # should never happen
             self.fail()
-    
+
     def test_counting_lines(self):
         self.assertEqual(__, self.count_lines("example_file.txt"))
-    
+
     # ------------------------------------------------------------------
-        
+
     def find_line(self, file_name):
         try:
             file = open(file_name)
@@ -42,10 +39,10 @@ class AboutWithStatements(Koan):
         except IOError:
             # should never happen
             self.fail()
-    
+
     def test_finding_lines(self):
         self.assertEqual(__, self.find_line("example_file.txt"))
-    
+
     ## ------------------------------------------------------------------
     ## THINK ABOUT IT:
     ##
@@ -53,8 +50,8 @@ class AboutWithStatements(Koan):
     ## They both follow the pattern of "sandwich code".
     ##
     ## Sandwich code is code that comes in three parts: (1) the top slice
-    ## of bread, (2) the meat, and (3) the bottom slice of bread.  The
-    ## the bread part of the sandwich almost always goes together, but
+    ## of bread, (2) the meat, and (3) the bottom slice of bread.
+    ## The bread part of the sandwich almost always goes together, but
     ## the meat part changes all the time.
     ##
     ## Because the changing part of the sandwich code is in the middle,
@@ -68,49 +65,44 @@ class AboutWithStatements(Koan):
     ## Python solves the problem using Context Managers. Consider the
     ## following code:
     ##
-    
+
     class FileContextManager():
         def __init__(self, file_name):
             self._file_name = file_name
             self._file = None
-        
+
         def __enter__(self):
             self._file = open(self._file_name)
             return self._file
-        
+
         def __exit__(self, cls, value, tb):
             self._file.close()
-    
+
     # Now we write:
-    
+
     def count_lines2(self, file_name):
         with self.FileContextManager(file_name) as file:
-            count = 0
-            for line in file.readlines():
-                count += 1
-        return count
-    
+            return len(file.readlines())
+
     def test_counting_lines2(self):
         self.assertEqual(__, self.count_lines2("example_file.txt"))
-    
+
     # ------------------------------------------------------------------
-    
+
     def find_line2(self, file_name):
-        # Rewrite find_line using the Context Manager.      
-        pass
-    
+        # Using the context manager self.FileContextManager, rewrite this
+        # function to return the first line containing the letter 'e'.
+        return None
+
     def test_finding_lines2(self):
-        self.assertEqual(__, self.find_line2("example_file.txt"))
-        self.assertNotEqual(__, self.find_line2("example_file.txt"))
-    
+        self.assertNotEqual(None, self.find_line2("example_file.txt"))
+        self.assertEqual('test\n', self.find_line2("example_file.txt"))
+
     # ------------------------------------------------------------------
-    
+
     def count_lines3(self, file_name):
         with open(file_name) as file:
-            count = 0
-            for line in file.readlines():
-              count += 1
-            return count
-    
+            return len(file.readlines())
+
     def test_open_already_has_its_own_built_in_context_manager(self):
         self.assertEqual(__, self.count_lines3("example_file.txt"))

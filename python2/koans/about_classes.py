@@ -10,7 +10,7 @@ class AboutClasses(Koan):
 
     def test_instances_of_classes_can_be_created_adding_parentheses(self):
         fido = self.Dog()
-        self.assertEqual(__, type(fido).__name__)
+        self.assertEqual(__, fido.__class__.__name__)
 
     def test_classes_have_docstrings(self):
         self.assertMatch(__, self.Dog.__doc__)
@@ -109,7 +109,7 @@ class AboutClasses(Koan):
         # THINK ABOUT IT:
         # Why is this so?
 
-    def test_different_objects_have_difference_instance_variables(self):
+    def test_different_objects_have_different_instance_variables(self):
         fido = self.Dog5("Fido")
         rover = self.Dog5("Rover")
 
@@ -125,6 +125,9 @@ class AboutClasses(Koan):
             return self
 
         def __str__(self):
+            #
+            # Implement this!
+            #
             return __
 
         def __repr__(self):

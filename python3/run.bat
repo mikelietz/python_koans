@@ -2,14 +2,15 @@
 
 REM This is how you run it from the command line.
 REM You don't actually need this script!
-SET RUN_KOANS=python.exe contemplate_koans.py
+SET RUN_KOANS=python.exe -B contemplate_koans.py
 
 REM Set this to your python folder:
-SET PYTHON_PATH=C:\Python31
-
-
+SET PYTHON_PATH=C:\Python34
 
 set SCRIPT=
+
+:loop
+
 REM Hunt around for python
 IF EXIST "python.exe" (
   SET SCRIPT=%RUN_KOANS%
@@ -34,4 +35,10 @@ IF NOT "" == "%SCRIPT%" (
   echo   python.exe contemplate_koans.py
   pause
 )
+
+Set /p  keepgoing="Test again? y or n - "
+if "%keepgoing%" == "y" (
+	goto loop
+	)
+
 :end

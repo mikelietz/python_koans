@@ -19,7 +19,7 @@ class AboutAttributeAccess(Koan):
         try:
             typical.foobar()
         except Exception as exception:
-            self.assertEqual(__, type(exception).__name__)
+            self.assertEqual(__, exception.__class__.__name__)
             self.assertMatch(__, exception[0])
 
     def test_calling_getattribute_causes_an_attribute_error(self):
@@ -105,10 +105,6 @@ class AboutAttributeAccess(Koan):
             self.no_of_getattribute_calls = 0
 
         def __getattribute__(self, attr_name):
-            #Uncomment for debugging info:
-            #print 'Debug __getattribute__(' + type(self).__name__ + \
-            #    "." + attr_name + ") dict=" + str(self.__dict__)
-
             # We need something that is outside the scope of this class:
             global stack_depth
             stack_depth += 1
@@ -160,7 +156,7 @@ class AboutAttributeAccess(Koan):
         catcher.free_pie()
 
         self.assertEqual(__,
-            type(catcher.give_me_duff_or_give_me_death()).__name__)
+            catcher.give_me_duff_or_give_me_death().__class__.__name__)
 
         self.assertEqual(__, catcher.no_of_getattr_calls)
 
@@ -184,6 +180,10 @@ class AboutAttributeAccess(Koan):
         fanboy.pie = 'blueberry'
 
         self.assertEqual(__, fanboy.a_pie)
+
+        #
+        # NOTE: Change the prefix to make this next assert pass
+        #
 
         prefix = '__'
         self.assertEqual(
